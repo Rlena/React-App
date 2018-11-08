@@ -1,17 +1,21 @@
 import React, { Component } from 'react';
-import './App.css';
+import './App.scss';
 import Car from './Car/Car'
 
 class App extends Component {
 
-  state = {
-    cars: [
-      { name: 'Ford', year: 2018 },
-      { name: 'Audi', year: 2016 },
-      { name: 'Mazda', year: 2010 }
-    ],
-    pageTitle: 'React component',
-    showCars: false
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      cars: [
+        { name: 'Ford', year: 2018 },
+        // { name: 'Audi', year: 2016 },
+        // { name: 'Mazda', year: 2010 }
+      ],
+      pageTitle: 'React component',
+      showCars: false
+    }
   }
 
   onChangeName(name, index) {
@@ -34,6 +38,14 @@ class App extends Component {
     this.setState({ cars }) // переопределение массива cars
   }
 
+  componentWillMount() {
+    console.log('App componentWillMount')
+  }
+
+  componentDidMount() {
+    console.log('App componentDidMount')
+  }
+
   // handleInput = (event) => {
   //   this.setState({
   //     pageTitle: event.target.value
@@ -41,7 +53,7 @@ class App extends Component {
   // }
 
   render() {
-    console.log('Render')
+    console.log('App render')
     const divStyle = {
       textAlign: 'center'
     }
@@ -67,7 +79,8 @@ class App extends Component {
       <div>
         <div style={divStyle}>
 
-          <h1>{this.state.pageTitle}</h1>
+          {/*<h1>{this.state.pageTitle}</h1>*/}
+          <h1>{this.props.title}</h1>
 
           {/* референс до определенного события */}
           {/* в метод автоматически передается event */}
@@ -85,6 +98,7 @@ class App extends Component {
 
           <button
             onClick={this.toggleCarsHandler}
+            className={'AppButton'}
           >
             Toggle cars
           </button>
