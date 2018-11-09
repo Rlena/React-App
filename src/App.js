@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './App.scss';
 import Car from './Car/Car'
+import ErrorBoundary from './ErrorBoundary/ErrorBoundary'
+import Counter from './Counter/Counter'
 
 class App extends Component {
 
@@ -9,7 +11,7 @@ class App extends Component {
 
     this.state = {
       cars: [
-        { name: 'Ford', year: 2018 },
+        { name: 'Ford', year: 2018 }
         // { name: 'Audi', year: 2016 },
         // { name: 'Mazda', year: 2010 }
       ],
@@ -53,7 +55,7 @@ class App extends Component {
   // }
 
   render() {
-    console.log('App render')
+    // console.log('App render')
     const divStyle = {
       textAlign: 'center'
     }
@@ -63,14 +65,15 @@ class App extends Component {
     if (this.state.showCars) {
       cars = this.state.cars.map((car, index) => {
         return (
-          // создание события и действия по его срабатыванию
-          <Car
-            key={index}
-            name={car.name}
-            year={car.year}
-            onChangeName={(event) => this.onChangeName(event.target.value, index)}
-            onDelete={() => this.deleteHandler(index)}
-          />
+          <ErrorBoundary key={index}>
+            {/*создание события и действия по его срабатыванию*/}
+            <Car
+              name={car.name}
+              year={car.year}
+              onChangeName={(event) => this.onChangeName(event.target.value, index)}
+              onDelete={() => this.deleteHandler(index)}
+            />
+          </ErrorBoundary>
         )
       })
     }
@@ -81,6 +84,18 @@ class App extends Component {
 
           {/*<h1>{this.state.pageTitle}</h1>*/}
           <h1>{this.props.title}</h1>
+
+          <Counter />
+
+          <hr />
+
+          <button
+            style={{marginTop: 20}}
+            className={'AppButton'}
+            onClick={this.toggleCarsHandler}
+          >
+            Toggle cars
+          </button>
 
           {/* референс до определенного события */}
           {/* в метод автоматически передается event */}
@@ -96,12 +111,7 @@ class App extends Component {
           {/*Change title*/}
           {/*</button>*/}
 
-          <button
-            onClick={this.toggleCarsHandler}
-            className={'AppButton'}
-          >
-            Toggle cars
-          </button>
+
 
           <div style={{
             width: 400,
