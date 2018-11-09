@@ -1,48 +1,10 @@
 import React from 'react'
 import './Car.css'
-// import Radium from 'radium'
 
 class Car extends React.Component {
 
-  componentWillReceiveProps(nextProps) {
-    console.log('Car componentWillReceiveProps', nextProps)
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    console.log('Car shouldComponentUpdate', nextProps, nextState)
-    // trim обрезает лишние пробелы, чтобы не перерисовавыть компонент, если в инпут ввели только пробелы
-    return nextProps.name.trim() !== this.props.name.trim()
-  }
-
-  componentWillUpdate(nextProps, nextState) {
-    console.log('Car componentWillUpdate', nextProps, nextState)
-  }
-
-  // static getDerivedStateFromProps(nextProps, prevState) {
-  //   console.log('Car getDerivedStateFromProps', nextProps, prevState)
-  //
-  //   return prevState
-  // }
-
-  componentDidUpdate() {
-    console.log('Car componentDidUpdate')
-  }
-
-  // getSnapshotBeforeUpdate() {
-  //   console.log('Car getSnapshotBeforeUpdate')
-  // }
-
-  componentWillUnmount() {
-    console.log("Car componentWillUnmount");
-  }
-
   render() {
     console.log('Car render')
-
-    // эмуляция ошибки
-    // if(Math.random() > 0.7) {
-    //   throw new Error('Car random failed')
-    // }
 
     const inputClasses = ['input']
 
@@ -82,19 +44,4 @@ class Car extends React.Component {
   }
 }
 
-// оборачиваем наш компонент Car в функционал Radium
 export default Car
-
-// function car() {
-//   return (
-//     <div>This is Car component</div>
-//   )
-// }
-
-// const car = () => {
-//   return (
-//     <div>This is Car component</div>
-//   )
-// }
-
-// const car = () => <div>This is Car component</div>
