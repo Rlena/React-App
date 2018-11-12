@@ -1,11 +1,24 @@
 import React from 'react'
-import './Car.css'
+import './Car.scss'
+import PropTypes from 'prop-types'
+import withClass from '../hoc/withClass'
 
 class Car extends React.Component {
 
-  render() {
-    console.log('Car render')
+  // новый способ создавать референции React 16
+  constructor(props) {
+    super()
+    this.inputRef = React.createRef()
+  }
 
+  // срабатывает после рендера элемента
+  componentDidMount() {
+    if(this.props.index === 0) {
+      this.inputRef.current.focus()
+    }
+  }
+
+  render() {
     const inputClasses = ['input']
 
     if (this.props.name !== '') {
@@ -18,30 +31,33 @@ class Car extends React.Component {
       inputClasses.push('bold')
     }
 
-    const style = {
-      border: '1px solid #ccc',
-      boxShadow: '0 4px 5px 0 rgba(0, 0, 0, .14)',
-      ':hover': {
-        border: '1px solid #aaa',
-        boxShadow: '0 4px 15px 0 rgba(0, 0, 0, .25)',
-        cursor: 'pointer'
-      }
-    }
-
     return (
-      <div className="Car" style={style}>
-        <h3>Car name: {this.props.name} </h3>
+      <React.Fragment>
+        <h3>Car name: {this.props.name}</h3>
         <p>Year: <strong>{this.props.year}</strong></p>
         <input
+          ref={this.inputRef}
           type="text"
           onChange={this.props.onChangeName}
           value={this.props.name}
           className={inputClasses.join(' ')}
         />
         <button onClick={this.props.onDelete}>Delete</button>
-      </div>
+      </React.Fragment>
     )
   }
 }
 
-export default Car
+// ключи полей, которые мы ожидаем
+// isRequired отмечаем, что name - обязательное свойство, если оно не получено, ошибка
+Car.propTypes = {
+  name: PropTypes.string.isRequired,
+  year: PropTypes.number,
+  index: PropTypes.number,
+  onChangeName: PropTypes.func,
+  onDelete: PropTypes.func
+}
+
+// обернули компонент Car в withClass
+// параметры - компонент Car, название класса 'Car'
+export default withClass(Car, 'Car')
